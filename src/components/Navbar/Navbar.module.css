@@ -1,7 +1,11 @@
 .nav {
   grid-area: n;
   background-color: lightgrey;
-  padding: 20px;
+  padding-left: 2vw;
+}
+
+.nav2 {
+  padding: 20px 0;
 }
 
 /*.item {

@@ -2,7 +2,7 @@ import React from 'react'
 import PostsContainer from './Posts/PostsContainer';
 import s from "./Profile.module.css";
 import ProfileImg from './ProfileInfo/ProfileImg';
-import ProfileInfo from './ProfileInfo/ProfileInfo';
+import ProfileInfoContainer from "./ProfileInfo/ProfileInfoContainer";
 
 
 const Profile = () => {
@@ -10,7 +10,7 @@ const Profile = () => {
     <div>
       <ProfileImg />
       <div className={s.leftPad}>
-        <ProfileInfo />
+        <ProfileInfoContainer />
         <PostsContainer />
       </div>
     </div>
