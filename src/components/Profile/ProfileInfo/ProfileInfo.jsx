@@ -3,9 +3,9 @@ import s from "./ProfileInfo.module.css";
 
 const ProfileInfo = (props) => {
 
-  let surname = props.profileData.surname
-  let name = props.profileData.name
-  let email = props.profileData.email;
+  let surname = props.profileData.base.surname
+  let name = props.profileData.base.name
+  let email = props.profileData.base.email;
 
   let newName = React.createRef();
 

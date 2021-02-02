@@ -5,17 +5,27 @@ const UPDATE_PROFILE_NAME = "UPDATE_PROFILE_NAME";
 
 let initialState = {
   profileData: {
-    name: "Teacher",
-    surname: "Russo",
-    email: "example@mail.com",
-    password: "open",
-    deepInfo: {
+    base: {
+      name: "Teacher",
+      surname: "Russo",
       gender: "Male",
-      BirthDate: "11.11.1995",
+      BirthDate: "11.11.1922",
+      email: "example@mail.com",
+      password: "open",
+      city: "Ufa",
+      company: "",
+      eduPlace: "",
+      workPosition: "",
+      eduSpecialty: "",
+    },
+    deepInfo: {
       photo: "",
       education: "",
-      tel: "",
+      telOrLogin: "",
+      description: ''
     },
+    competences: "",
+    interests: [],
   },
   postsData: [
     { id: 1, message: "first post!", likesCount: 12 },
@@ -23,7 +33,7 @@ let initialState = {
     { id: 3, message: "Durofff verni stenu!!!", likesCount: 1 },
   ],
   newPostText: "Pupiiiiiiii",
-  newNameText: ""
+  newNameText: "",
 };
 
 const profileReducer = (state_p = initialState, action) => {
@@ -49,8 +59,11 @@ const profileReducer = (state_p = initialState, action) => {
       let name = state_p.newNameText;
       return {
         ...state_p,
-        profileData: { ...state_p.profileData, name },
-        newNameText: ""
+        profileData: {
+          ...state_p.profileData,
+          base: { ...state_p.base, name },
+        },
+        newNameText: "",
       };
     }
     case UPDATE_PROFILE_NAME: {
