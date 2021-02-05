@@ -6,6 +6,7 @@ const UPDATE_PROFILE_NAME = "UPDATE_PROFILE_NAME";
 let initialState = {
   profileData: {
     base: {
+      userId: 1,
       name: "Teacher",
       surname: "Russo",
       gender: "Male",

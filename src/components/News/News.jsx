@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Courses = () => {
+const News = () => {
   return (
     <div>
-      <div>Куча курсов</div>
+      <div>НОВОСТИ</div>
     </div>
   );
 };
 
-export default Courses;
+export default News;
