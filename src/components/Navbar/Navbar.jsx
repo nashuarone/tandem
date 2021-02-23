@@ -42,7 +42,7 @@ const Navbar = () => {
           <a href="s.com">Инструменты</a>
         </div>
         <div className={s.friends}>
-          <h3>Friends</h3>
+          <h3>Students</h3>
           <div className={s.friendsblock}>
             <div>
               <img

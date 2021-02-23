@@ -12,6 +12,7 @@
   margin: 0 2vw;
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .header2 {
@@ -24,4 +25,16 @@
 
 .header img {
   width: 60px;
+}
+
+.loginBlock {
+  line-height: 60px;
+  margin: 0 20px 0 auto;
+  color: tomato;
+  font-weight: bold;
+}
+.loginBlock a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
 }

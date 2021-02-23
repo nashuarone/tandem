@@ -7,6 +7,7 @@ import Navbar from './components/Navbar/Navbar';
 import News from "./components/News/News";
 import CoursesContainer from "./components/Courses/CoursesContainer";
 import Profile from './components/Profile/Profile';
+import Registration from './components/Registration/Registration';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Header />
           <Navbar />
           <div className="app-wrapper-content">
+            <Route path="/registration" render={() => <Registration />} />
             <Route path="/profile" render={() => <Profile />} />
             <Route path="/dialogs" render={() => <DialogsContainer />} />
             <Route path="/news" component={News} />
