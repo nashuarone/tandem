@@ -10,7 +10,7 @@ const Courses = (props) => {
         {props.coursesData.map((c) => (
           <div className={s.courseItem} key={c.id}>
             <div className={s.coursePicture}>
-              <img src={c.courseImg} />
+              <img alt="pic" src={c.courseImg} />
             </div>
             <div className={s.descriptionItem}>
               <span className={s.tittleDecor}>{c.tittle}</span>

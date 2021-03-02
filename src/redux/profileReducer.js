@@ -2,29 +2,27 @@ const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const ADD_PROFILE_NAME = "ADD_PROFILE_NAME";
 const UPDATE_PROFILE_NAME = "UPDATE_PROFILE_NAME";
+const SET_LEARNER = "SET_LEARNER";
+const LOGOUT = "LOGOUT";
 
 let initialState = {
   profileData: {
-    base: {
-      userId: 1,
-      name: "Teacher",
-      surname: "Russo",
-      gender: "Male",
-      BirthDate: "11.11.1922",
-      email: "example@mail.com",
-      password: "open",
-      city: "Ufa",
-      company: "",
-      eduPlace: "",
-      workPosition: "",
-      eduSpecialty: "",
-    },
-    deepInfo: {
-      photo: "",
-      education: "",
-      telOrLogin: "",
-      description: ''
-    },
+    userId: 1,
+    name: "Teacher",
+    surname: "Russo",
+    gender: "Male",
+    BirthDate: "11.11.1922",
+    email: "example@mail.com",
+    password: "open",
+    city: "Ufa",
+    company: "",
+    eduPlace: "",
+    workPosition: "",
+    eduSpecialty: "",
+    photo: "",
+    education: "",
+    telOrLogin: "",
+    description: '',
     competences: "",
     interests: [],
   },
@@ -35,6 +33,7 @@ let initialState = {
   ],
   newPostText: "Pupiiiiiiii",
   newNameText: "",
+  isAuth: false
 };
 
 const profileReducer = (state_p = initialState, action) => {
@@ -62,7 +61,7 @@ const profileReducer = (state_p = initialState, action) => {
         ...state_p,
         profileData: {
           ...state_p.profileData,
-          base: { ...state_p.base, name },
+          name,
         },
         newNameText: "",
       };
@@ -70,7 +69,22 @@ const profileReducer = (state_p = initialState, action) => {
     case UPDATE_PROFILE_NAME: {
       return {
         ...state_p,
-        newNameText: action.name
+        newNameText: action.name,
+      };
+    }
+    case SET_LEARNER: {
+      return {
+        ...state_p,
+        profileData: action.payload,
+        isAuth: true,
+      };
+    }
+    case LOGOUT: {
+      localStorage.removeItem('token')
+      return {
+        ...state_p,
+        profileData: {},
+        isAuth: false,
       };
     }
     default:
@@ -79,17 +93,21 @@ const profileReducer = (state_p = initialState, action) => {
 }
 
 export const addPostActionCreator = () => ({ type: ADD_POST });
-
 export const updateNewPostTextActionCreator = (postMessageUI) => ({
   type: UPDATE_NEW_POST_TEXT,
   text: postMessageUI,
 });
-
 export const addProfileDataAC = () => ({ type: ADD_PROFILE_NAME });
-
 export const updateProfileNameAC = (newProfileData) => ({
   type: UPDATE_PROFILE_NAME,
   name: newProfileData,
+});
+export const setLearner = (learner) => ({
+  type: SET_LEARNER,
+  payload: learner,
+});
+export const logout = () => ({
+  type: LOGOUT,
 });
 
 export default profileReducer;

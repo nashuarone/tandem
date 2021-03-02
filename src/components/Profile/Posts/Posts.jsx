@@ -12,7 +12,7 @@ const Posts = (props) => {
   // ];
 
   let postElements = props.postsData.map((it) => (
-    <Post message={it.message} likesCount={it.likesCount} />
+    <Post key={it.id} message={it.message} likesCount={it.likesCount} />
   ));
 
   let newTextElement = React.createRef();

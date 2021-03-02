@@ -8,8 +8,11 @@ import News from "./components/News/News";
 import CoursesContainer from "./components/Courses/CoursesContainer";
 import Profile from './components/Profile/Profile';
 import Registration from './components/Registration/Registration';
+import Login from "./components/Registration/Login";
+import { useSelector } from 'react-redux';
 
 function App() {
+  const isAuth = useSelector((s) => s.profilePage.isAuth);
   return (
     <BrowserRouter>
       <div>
@@ -17,7 +20,10 @@ function App() {
           <Header />
           <Navbar />
           <div className="app-wrapper-content">
-            <Route path="/registration" render={() => <Registration />} />
+            {!isAuth && (
+              <Route path="/registration" render={() => <Registration />} />
+            )}
+            {!isAuth && <Route path="/login" render={() => <Login />} />}
             <Route path="/profile" render={() => <Profile />} />
             <Route path="/dialogs" render={() => <DialogsContainer />} />
             <Route path="/news" component={News} />

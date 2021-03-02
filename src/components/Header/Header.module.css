@@ -38,3 +38,10 @@
   text-decoration: none;
   margin-left: 20px;
 }
+.closeDiv {
+    padding: 0 10px;
+    cursor: pointer;
+}
+.closeDiv:hover {
+  background: rgba(255, 255, 255, 0.2)
+}
