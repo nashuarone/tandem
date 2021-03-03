@@ -5,7 +5,7 @@ function cors (req, res, next) {
     "Access-Control-Allow-Methods",
     "GET, PUT, PATCH, POST, DELETE, OPTIONS"
   );
-  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 }
 

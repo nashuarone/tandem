@@ -4,6 +4,9 @@ const jwt = require('jsonwebtoken')
 const config = require("config")
 const { check, validationResult } = require('express-validator')
 const Learner = require('../models/Learner')
+const authMiddleware = require('../middleware/auth.middleware')
+const fileService = require("../services/fileService");
+const File = require("../models/File");
 
 const router = new Router()
 
@@ -16,7 +19,7 @@ router.post("/registration", [
     if(!errors.isEmpty()) {
       return res.status(400).json({message: "Uncorrect request", errors})
     }
-    const {email, password} = req.body
+    const {email, password, myname, surname} = req.body
     const candidate = await Learner.findOne({email})
     if(candidate) {
       return res.status(400).json({
@@ -24,8 +27,9 @@ router.post("/registration", [
       });
     }
     const hashPassword = await bcrypt.hash(password, 8)
-    const learner = new Learner({email, password: hashPassword})
+    const learner = new Learner({email, password: hashPassword, myname, surname})
     await learner.save()
+    await fileService.createDir(req, new File({ learner: learner.id, fileName: "" }));
     return res.json({message: "Пользователь создан, удачи в развитии! ;)"})
   } catch (err) {
     console.log(err);
@@ -52,6 +56,8 @@ router.post(
         learner: {
           id: learner.id,
           email: learner.email,
+          myname: learner.myname,
+          surname: learner.surname,
           diskSpace: learner.diskSpace,
           usedSpace: learner.usedSpace,
           avatar: learner.avatar,
@@ -64,5 +70,30 @@ router.post(
     }
   }
 );
+
+router.get("/auth", authMiddleware, async (req, res) => {
+  try {
+    const learner = await Learner.findOne({_id: req.learner.id})
+    const token = jwt.sign({ id: learner.id }, config.get("secretKey"), {
+      expiresIn: "8h",
+    });
+    return res.json({
+      token,
+      learner: {
+        id: learner.id,
+        email: learner.email,
+        myname: learner.myname,
+        surname: learner.surname,
+        diskSpace: learner.diskSpace,
+        usedSpace: learner.usedSpace,
+        avatar: learner.avatar,
+        phone: learner.phone,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({ message: "server error" });
+  }
+});
 
 module.exports = router

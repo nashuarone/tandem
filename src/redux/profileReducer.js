@@ -8,7 +8,7 @@ const LOGOUT = "LOGOUT";
 let initialState = {
   profileData: {
     userId: 1,
-    name: "Teacher",
+    myname: "Teacher",
     surname: "Russo",
     gender: "Male",
     BirthDate: "11.11.1922",
@@ -61,7 +61,7 @@ const profileReducer = (state_p = initialState, action) => {
         ...state_p,
         profileData: {
           ...state_p.profileData,
-          name,
+          myname: name,
         },
         newNameText: "",
       };

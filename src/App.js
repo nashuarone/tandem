@@ -1,5 +1,5 @@
-import React from 'react'
-import { BrowserRouter, Route } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 import './App.css';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import Header from './components/Header/Header';
@@ -9,10 +9,16 @@ import CoursesContainer from "./components/Courses/CoursesContainer";
 import Profile from './components/Profile/Profile';
 import Registration from './components/Registration/Registration';
 import Login from "./components/Registration/Login";
-import { useSelector } from 'react-redux';
+import Disk from "./components/Disk/Disk"
+import { useDispatch, useSelector } from 'react-redux';
+import { authAPI } from './api/api';
 
 function App() {
   const isAuth = useSelector((s) => s.profilePage.isAuth);
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(authAPI())
+  }, [])
   return (
     <BrowserRouter>
       <div>
@@ -20,14 +26,22 @@ function App() {
           <Header />
           <Navbar />
           <div className="app-wrapper-content">
-            {!isAuth && (
-              <Route path="/registration" render={() => <Registration />} />
+            {!isAuth ? (
+              <Switch>
+                <Route path="/registration" render={() => <Registration />} />
+                <Route path="/login" render={() => <Login />} />
+                <Redirect to="/login" />
+              </Switch>
+            ) : (
+              <Switch>
+                <Route exact path="/profile" render={() => <Profile />} />
+                <Route path="/dialogs" render={() => <DialogsContainer />} />
+                <Route path="/news" component={News} />
+                <Route path="/courses" render={() => <CoursesContainer />} />
+                <Route path="/disk" render={() => <Disk />} />
+                <Redirect to="/profile" />
+              </Switch>
             )}
-            {!isAuth && <Route path="/login" render={() => <Login />} />}
-            <Route path="/profile" render={() => <Profile />} />
-            <Route path="/dialogs" render={() => <DialogsContainer />} />
-            <Route path="/news" component={News} />
-            <Route path="/courses" render={() => <CoursesContainer />} />
           </div>
         </div>
       </div>

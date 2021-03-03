@@ -3,8 +3,8 @@ import s from "./ProfileInfo.module.css";
 
 const ProfileInfo = (props) => {
 
-  // let surname = props.profileData.surname
-  // let name = props.profileData.name
+  let surname = props.profileData.surname
+  let myname = props.profileData.myname
   let email = props.profileData.email;
 
   let newName = React.createRef();
@@ -26,7 +26,7 @@ const ProfileInfo = (props) => {
       <div className={s.profileItem}>
         <div className={s.profileItemHalf}>
           <div className={s.boldValue}>Имя</div>
-          <div className={s.postBlock}>{"name было"}</div>
+          <div className={s.postBlock}>{myname}</div>
           <i className="fas fa-pencil-alt"></i>
         </div>
         <div className={s.profileItemHalf}>
@@ -46,7 +46,7 @@ const ProfileInfo = (props) => {
       <div className={s.profileItem}>
         <div className={s.profileItemHalf}>
           <div className={s.boldValue}>Фамилия</div>
-          <div className={s.postBlock}>{"surname было"}</div>
+          <div className={s.postBlock}>{surname}</div>
         </div>
       </div>
       <div className={s.profileItem}>
