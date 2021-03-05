@@ -7,14 +7,14 @@ const File = require("../models/File");
 class FileController {
   async createDir(req, res) {
     try {
-      const { fileName, type, parent } = req.body;
-      const file = new File({ fileName, type, parent, learner: req.learner.id });
+      const { name, type, parent } = req.body;
+      const file = new File({ name, type, parent, learner: req.learner.id });
       const parentFile = await File.findOne({ _id: parent });
       if (!parentFile) {
-        file.path = fileName;
+        file.path = name
         await fileService.createDir(req, file);
       } else {
-        file.path = `${parentFile.path}/${file.fileName}`;
+        file.path = `${parentFile.path}/${file.name}`;
         await fileService.createDir(req, file);
         parentFile.childs.push(file._id);
         await parentFile.save();
@@ -60,22 +60,26 @@ class FileController {
 
       let path;
       if (parent) {
-        path = req.filePath + `/${learner._id}/${parent.path}/${file.fileName}`;
+        path = req.filePath + `/${learner._id}/${parent.path}/${file.name}`;
       } else {
-        path = req.filePath + `/${learner._id}/${file.fileName}`;
+        path = req.filePath + `/${learner._id}/${file.name}`;
       }
 
       if (fs.existsSync(path)) {
-        return res.status(400).json({ message: "File already exist" });
+        return res.status(400).json({ message: "File already exist..." });
       }
       file.mv(path);
-      const type = file.fileName.split(".").pop();
+      const type = file.name.split(".").pop();
+      let filePath = file.name;
+      if (parent) {
+        filePath = parent.path + `/${file.name}`;
+      }
       const dbFile = new File({
-        fileName: file.fileName,
+        name: file.name,
         type,
         size: file.size,
-        path: parent ? parent.path : file.path,
-        parent: parent ? parent._id : user._id,
+        path: filePath,
+        parent: parent ? parent._id : null,
         learner: learner._id,
       });
 
@@ -88,6 +92,26 @@ class FileController {
       return res.status(500).json({ message: "Upload error" });
     }
   }
+
+  async downloadFile(req, res) {
+    try {
+      const file = await File.findOne({
+        _id: req.query.id,
+        learner: req.learner.id,
+      });
+      const path =
+        req.filePath + `/${req.learner.id}` + `/${file.path}`;
+        console.log(path)
+      if (fs.existsSync(path)) {
+        return res.download(path, file.name)
+      }
+      return res.status(400).json({message: "Ошибка загрузки"})
+    } catch (e) {
+      console.log(e);
+      return res.status(500).json({ message: "Download error" });
+    }
+  }
+
 }
 
 module.exports = new FileController();

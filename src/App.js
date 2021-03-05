@@ -29,12 +29,12 @@ function App() {
             {!isAuth ? (
               <Switch>
                 <Route path="/registration" render={() => <Registration />} />
-                <Route path="/login" render={() => <Login />} />
+                <Route exact path="/login" render={() => <Login />} />
                 <Redirect to="/login" />
               </Switch>
             ) : (
               <Switch>
-                <Route exact path="/profile" render={() => <Profile />} />
+                <Route path="/profile" render={() => <Profile />} />
                 <Route path="/dialogs" render={() => <DialogsContainer />} />
                 <Route path="/news" component={News} />
                 <Route path="/courses" render={() => <CoursesContainer />} />

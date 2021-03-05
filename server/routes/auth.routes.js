@@ -29,7 +29,7 @@ router.post("/registration", [
     const hashPassword = await bcrypt.hash(password, 8)
     const learner = new Learner({email, password: hashPassword, myname, surname})
     await learner.save()
-    await fileService.createDir(req, new File({ learner: learner.id, fileName: "" }));
+    await fileService.createDir(req, new File({ learner: learner.id, name: "" }));
     return res.json({message: "Пользователь создан, удачи в развитии! ;)"})
   } catch (err) {
     console.log(err);

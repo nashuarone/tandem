@@ -1,29 +1,41 @@
 .disk {
   margin: 20px;
 }
-
+.disk__btns {
+  display: flex;
+}
 .disk__create {
   margin-left: 10px;
+}
+.disk__upload {
+  margin-left: 10px;
+}
+.disk__uploadLabel {
+  border: 2px dashed gray;
+  padding: 0 5px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 22px;
+}
+.disk__uploadInput {
+  display: none;
 }
 
 .filelist {
   margin: 20px 0;
 }
-
 .filelist__header {
   display: grid;
   grid-template-columns: 1fr 4fr repeat(4, 1fr);
 }
-
 .filelist__name {
   grid-column-start: 2;
 }
-
 .filelist__date {
   grid-column-start: 5;
   justify-self: center;
 }
-
 .filelist__size {
   grid-column-start: 6;
   justify-self: center;
@@ -31,29 +43,37 @@
 
 .file {
   margin: 10px 0;
+  padding-bottom: 9px;
   border-bottom: solid 2px gray;
   display: grid;
   grid-template-columns: 1fr 4fr repeat(4, 1fr);
   align-items: center;
 }
-
 .file:hover {
   transform: scale(1.01);
   transition-duration: 0.2s;
 }
-
 .file__date {
   grid-column-start: 5;
   justify-self: center;
 }
-
 .file__size {
   grid-column-start: 6;
   justify-self: center;
 }
-
 .file__img {
   justify-self: center;
+}
+.fileBtn {
+  display: none;
+}
+.file:hover .fileDownload {
+  grid-column-start: 3;
+  display: block;
+}
+.file:hover .fileDelete {
+  grid-column-start: 4;
+  display: block;
 }
 
 .popup {
@@ -69,7 +89,6 @@
   justify-content: center;
   align-items: center;
 }
-
 .popup__content {
   width: 400px;
   background: white;
@@ -78,20 +97,16 @@
   display: flex;
   flex-direction: column;
 }
-
 .popup__header {
   display: flex;
   justify-content: space-between;
 }
-
 .popup__content > input {
   margin: 20px 0;
 }
-
 .popup__create {
   align-self: flex-end;
 }
-
 .popup__close {
   padding: 0 3px;
 }

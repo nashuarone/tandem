@@ -5,7 +5,7 @@ import st from "../Disk.module.css";
 
 const FileList = () => {
   const files = useSelector((s) => s.files.files).map((file) => (
-    <File file={file} key={file.id} />
+    <File file={file} key={file._id} />
   ));
 
   return (
