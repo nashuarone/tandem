@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { setLearner } from '../redux/profileReducer'
-import { setFiles, addFile } from "../redux/fileReducer";
+import { setFiles, addFile, deleteFileAC } from "../redux/fileReducer";
 
 export const registrationAPI = async (email, password, myname, surname) => {
   try {
@@ -146,3 +146,36 @@ export const downloadFileAPI = async (file) => {
     link.remove()
   }
 };
+
+export function deleteFileAPI(file) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/api/files?id=${file._id}`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      dispatch(deleteFileAC(file._id));
+      alert(response.data.message);
+    } catch (e) {
+      alert(e.response.data.message);
+    }
+  };
+}
+
+export function searchFileAPI(search) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/files/search?search=${search}`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      dispatch(setFiles(response.data));
+    } catch (e) {
+      alert(e.response.data.message);
+    }
+  };
+}

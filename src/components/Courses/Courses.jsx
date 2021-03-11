@@ -2,7 +2,6 @@ import React from 'react'
 import s from "./Courses.module.css";
 
 const Courses = (props) => {
-  debugger
   return (
     <div>
       <div>Куча курсов</div>

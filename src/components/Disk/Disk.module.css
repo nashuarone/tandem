@@ -21,6 +21,19 @@
 .disk__uploadInput {
   display: none;
 }
+.searchInput {
+  border: none;
+  border-bottom: 2px solid gray;
+  background: transparent;
+  margin-left: 10px;
+}
+.searchInput:focus {
+  outline: none;
+}
+.searchInput:hover {
+  transform: scale(1.01);
+  transition-duration: 0.3s;
+}
 
 .filelist {
   margin: 20px 0;

@@ -17,8 +17,8 @@ function App() {
   const isAuth = useSelector((s) => s.profilePage.isAuth);
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(authAPI())
-  }, [])
+    dispatch(authAPI());
+  }, [dispatch]);
   return (
     <BrowserRouter>
       <div>

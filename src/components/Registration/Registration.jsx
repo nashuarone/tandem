@@ -24,24 +24,28 @@ const Registration = () => {
       <h1>Registration</h1>
       <div className={s.inputsFlex}>
         <input
+          className={s.regInput}
           value={email}
           onChange={handlleChangeE}
           type="text"
           placeholder="Ведите email"
         />
         <input
+          className={s.regInput}
           value={password}
           onChange={handlleChangeP}
           type="password"
           placeholder="Введите пароль"
         />
         <input
+          className={s.regInput}
           value={myname}
           onChange={handlleChangeM}
           type="text"
           placeholder="Введите имя"
         />
         <input
+          className={s.regInput}
           value={surname}
           onChange={handlleChangeS}
           type="text"

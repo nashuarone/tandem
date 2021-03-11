@@ -1,7 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { downloadFileAPI } from "../../../../api/api";
+import { deleteFileAPI, downloadFileAPI } from "../../../../api/api";
 import { setCurrentDir, pushToStack } from "../../../../redux/fileReducer";
+import sizeFormat from "../../../../utils/sizeFormat";
 import st from "../../Disk.module.css";
 
 const File = ({ file }) => {
@@ -18,6 +19,11 @@ const File = ({ file }) => {
     downloadFileAPI(file)
   }
 
+  function deleteHandler(e) {
+    e.stopPropagation();
+    dispatch(deleteFileAPI(file));
+  }
+
   return (
     <div
       className={st.file}
@@ -32,9 +38,9 @@ const File = ({ file }) => {
       ></i>
       <div className={st.file__name}>{file.name}</div>
       {file.type !== "dir" && <button onClick={(e) => downloadHandler(e)} className={st.fileBtn+" "+st.fileDownload}>Скачать</button>}
-      <button className={st.fileBtn+" "+st.fileDelete}>Удалить</button>
+      <button onClick={(e) => deleteHandler(e)} className={st.fileBtn+" "+st.fileDelete}>Удалить</button>
       <div className={st.file__date}>{file.date.slice(0, 10)}</div>
-      {file.type !== "dir" && <div className={st.file__size}>{file.size}</div>}
+      {file.type !== "dir" && <div className={st.file__size}>{sizeFormat(file.size)}</div>}
 
     </div>
   );

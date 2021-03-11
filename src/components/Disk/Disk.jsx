@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getFilesAPI, uploadFileAPI } from "../../api/api";
+import { getFilesAPI, searchFileAPI, uploadFileAPI } from "../../api/api";
 import FileList from "./FileList/FileList";
 import Popup from "./Popup";
 import { setPopupDisplay, setCurrentDir } from "../../redux/fileReducer";
@@ -10,10 +10,12 @@ const Disk = () => {
   const dispatch = useDispatch();
   const currentDir = useSelector((s) => s.files.currentDir);
   const dirStack = useSelector((s) => s.files.dirStack);
+  const [searchName, setSearchName] = useState('')
+  const [searchTimeout, setSearchTimeout] = useState(false)
 
   useEffect(() => {
     dispatch(getFilesAPI(currentDir));
-  }, [currentDir]);
+  }, [currentDir, dispatch]);
 
   function showPopupHandler() {
     dispatch(setPopupDisplay("flex"));
@@ -27,6 +29,21 @@ const Disk = () => {
   function fileUploadHandler(e) {
     const files = [...e.target.files];
     files.forEach(file => dispatch(uploadFileAPI(file, currentDir)))
+  }
+
+  function searchHandler(e) {
+    setSearchName(e.target.value)
+    if (searchTimeout !== false) {
+      clearTimeout(searchTimeout)
+    }
+    if (e.target.value !== "") {
+      setSearchTimeout(setTimeout((value) => {
+        dispatch(searchFileAPI(value))
+      }, 500, e.target.value))
+    } else {
+      dispatch(getFilesAPI(currentDir))
+    }
+
   }
 
   return (
@@ -48,6 +65,15 @@ const Disk = () => {
             className={st.disk__uploadInput}
             multiple={true}
             onChange={(e) => fileUploadHandler(e)}
+          />
+        </div>
+        <div>
+          <input
+            className={st.searchInput}
+            type="text"
+            placeholder="Поиск..."
+            value={searchName}
+            onChange={(e) => searchHandler(e)}
           />
         </div>
       </div>

@@ -50,7 +50,7 @@ router.post(
       if(!isPassValid) {
         return res.status(400).json({message: "Неверный пароль"})
       }
-      const token = jwt.sign({id: learner.id}, config.get("secretKey"), {expiresIn: "8h"})
+      const token = jwt.sign({id: learner.id}, config.get("secretKey"), {expiresIn: "30d"})
       return res.json({
         token,
         learner: {

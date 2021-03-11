@@ -18,18 +18,25 @@ const Login = () => {
       <h1>Log in</h1>
       <div className={s.inputsFlex}>
         <input
+          className={s.regInput}
           value={email}
           onChange={handlleChangeE}
           type="text"
           placeholder="Ведите email"
         />
         <input
+          className={s.regInput}
           value={password}
           onChange={handlleChangeP}
           type="password"
           placeholder="Введите пароль"
         />
-        <button className={s.regBtn} onClick={() => dispatch(loginAPI(email, password))} >Войти</button>
+        <button
+          className={s.regBtn}
+          onClick={() => dispatch(loginAPI(email, password))}
+        >
+          Войти
+        </button>
       </div>
     </div>
   );

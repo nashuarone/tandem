@@ -11,7 +11,7 @@ class FileController {
       const file = new File({ name, type, parent, learner: req.learner.id });
       const parentFile = await File.findOne({ _id: parent });
       if (!parentFile) {
-        file.path = name
+        file.path = name;
         await fileService.createDir(req, file);
       } else {
         file.path = `${parentFile.path}/${file.name}`;
@@ -99,19 +99,47 @@ class FileController {
         _id: req.query.id,
         learner: req.learner.id,
       });
-      const path =
-        req.filePath + `/${req.learner.id}` + `/${file.path}`;
-        console.log(path)
+      const path = req.filePath + `/${req.learner.id}` + `/${file.path}`;
+      console.log(path);
       if (fs.existsSync(path)) {
-        return res.download(path, file.name)
+        return res.download(path, file.name);
       }
-      return res.status(400).json({message: "Ошибка загрузки"})
+      return res.status(400).json({ message: "Ошибка загрузки" });
     } catch (e) {
       console.log(e);
       return res.status(500).json({ message: "Download error" });
     }
   }
 
+  async deleteFile(req, res) {
+    try {
+      const file = await File.findOne({
+        _id: req.query.id,
+        learner: req.learner.id,
+      });
+      if (!file) {
+        return res.status(400).json({ message: "File not found" });
+      }
+      fileService.deleteFilePhisical(req, file)
+      await file.remove()
+      return res.json({ message: "Удалено" });
+    } catch (e) {
+      console.log(e);
+      return res.status(400).json({ message: "Ошибка. Folder is not empty" });
+    }
+  }
+
+  async searchFile(req, res) {
+    try {
+      const searchName = req.query.search
+      let files = await File.find({learner: req.learner.id})
+      files = files.filter(f => f.name.includes(searchName))
+      return res.json(files)
+    } catch (e) {
+      console.log(e);
+      return res.status(400).json({ message: "Search error" });
+    }
+  }
 }
 
 module.exports = new FileController();
