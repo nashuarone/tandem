@@ -51,6 +51,38 @@ export const authAPI = () => {
   };
 };
 
+export const uploadAvatarAPI = (file) => {
+  return async (dispatch) => {
+    try {
+      const formData = new FormData()
+      formData.append("file", file);
+      const response = await axios.post("http://localhost:5000/api/files/avatar", formData,
+      {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+      dispatch(setLearner(response.data));
+    } catch (e) {
+      console.log(e)
+    }
+  };
+};
+
+export const deleteAvatarAPI = () => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.delete(
+        "http://localhost:5000/api/files/avatar",
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      dispatch(setLearner(response.data));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
 export function getFilesAPI(dirId) {
   return async (dispatch) => {
     try {

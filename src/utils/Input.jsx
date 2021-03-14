@@ -6,7 +6,7 @@ function Input(props) {
     <input
       value={props.value}
       onChange={(e) => props.setValue(e.target.value)}
-      className={st.input}
+      className={st.myInput}
       type={props.type}
       placeholder={props.placeholder}
     />

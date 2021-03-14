@@ -1,4 +1,4 @@
-.input {
+.myInput {
   border: none;
   border-bottom: gray solid 3px;
   background-color: transparent;
@@ -6,7 +6,7 @@
   padding: 3px;
 }
 
-.input:focus, input:hover {
+.myInput:focus, .myInput:hover {
   outline: none;
   transform: scale(1.02);
   transition-duration: 0.2s;

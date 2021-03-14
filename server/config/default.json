@@ -1,5 +1,6 @@
 {
   "serverPort" : 5000,
   "dbUrl" : "mongodb+srv://tandemAdmin:MVUgQFA2mKL0M3FZ@lmscluster.60v00.mongodb.net/LMSCluster?retryWrites=true&w=majority",
-  "secretKey" : "tandem-key"
+  "secretKey" : "tandem-key",
+  "staticPath" : "C:/User/Skela/Documents/dev/tandem_ufa/server/static"
 }

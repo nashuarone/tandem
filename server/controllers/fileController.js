@@ -1,6 +1,7 @@
 const fileService = require("../services/fileService");
 const config = require("config");
 const fs = require("fs");
+const Uuid = require("uuid")
 const Learner = require("../models/Learner");
 const File = require("../models/File");
 
@@ -120,8 +121,8 @@ class FileController {
       if (!file) {
         return res.status(400).json({ message: "File not found" });
       }
-      fileService.deleteFilePhisical(req, file)
-      await file.remove()
+      fileService.deleteFilePhisical(req, file);
+      await file.remove();
       return res.json({ message: "Удалено" });
     } catch (e) {
       console.log(e);
@@ -131,13 +132,43 @@ class FileController {
 
   async searchFile(req, res) {
     try {
-      const searchName = req.query.search
-      let files = await File.find({learner: req.learner.id})
-      files = files.filter(f => f.name.includes(searchName))
-      return res.json(files)
+      const searchName = req.query.search;
+      let files = await File.find({ learner: req.learner.id });
+      files = files.filter((f) => f.name.includes(searchName));
+      return res.json(files);
     } catch (e) {
       console.log(e);
       return res.status(400).json({ message: "Search error" });
+    }
+  }
+
+  async uploadAvatar(req, res) {
+    try {
+      const avatarFile = req.files.file;
+      const learner = await Learner.findById(req.learner.id);
+      const avatarName = Uuid.v4() + ".jpg";
+      const path = req.filePath + "/static/" + avatarName;
+      avatarFile.mv(path);
+      learner.avatar = avatarName;
+      await learner.save();
+      return res.json(learner);
+    } catch (e) {
+      console.log(e);
+      return res.status(400).json({ message: "upload avatar error" });
+    }
+  }
+
+  async deleteAvatar(req, res) {
+    try {
+      const learner = await Learner.findById(req.learner.id);
+      const path = req.filePath + "/static/" + learner.avatar;
+      fs.unlinkSync(path);
+      learner.avatar = null;
+      await learner.save();
+      return res.json(learner);
+    } catch (e) {
+      console.log(e);
+      return res.status(400).json({ message: "delete avatar error" });
     }
   }
 }

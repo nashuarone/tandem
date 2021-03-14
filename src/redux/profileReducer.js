@@ -19,7 +19,7 @@ let initialState = {
     eduPlace: "",
     workPosition: "",
     eduSpecialty: "",
-    photo: "",
+    avatar: "",
     education: "",
     telOrLogin: "",
     description: '',

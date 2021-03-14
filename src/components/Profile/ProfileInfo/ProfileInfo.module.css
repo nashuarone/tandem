@@ -1,9 +1,28 @@
+.mainProfile {
+  display: flex;
+}
+.mainProfile > div {
+  width: 50%;
+}
+.mainProfile img {
+  width: 80%;
+  margin: auto;
+  padding: 10px;
+  border-radius: 50%;
+}
+.avatarBlock {
+  display: flex;
+}
+.buttonsBlock {
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+}
 .picture img {
   width: 100%;
 }
 
 .profileItem {
-  width: 45%;
   margin: 10px 0;
   background: white;
   border-radius: 3px;

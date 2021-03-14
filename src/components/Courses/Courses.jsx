@@ -3,7 +3,7 @@ import s from "./Courses.module.css";
 
 const Courses = (props) => {
   return (
-    <div>
+    <div className={s.coursesPage}>
       <div>Куча курсов</div>
       <div>
         {props.coursesData.map((c) => (
