@@ -5,6 +5,7 @@ const config = require('config')
 const fileUpload = require('express-fileupload')
 const authRuoter = require('./routes/auth.routes')
 const fileRuoter = require("./routes/file.routes");
+const courseRuoter = require("./routes/course.routes");
 const cors = require('./middleware/cors.middleware')
 const filepathMiddleware = require('./middleware/filepath.middleware')
 
@@ -18,6 +19,7 @@ app.use(express.json())
 app.use(express.static("files/static"))
 app.use("/api/auth", authRuoter)
 app.use("/api/files", fileRuoter)
+app.use("/api/courses", courseRuoter);
 
 const start = async () => {
   try {

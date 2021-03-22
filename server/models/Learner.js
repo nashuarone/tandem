@@ -9,6 +9,8 @@ const Learner = new Schema({
   usedSpace: { type: Number, default: 0 },
   avatar: { type: String },
   phone: { type: String },
+  gender: { type: String },
+  birthDay: { type: Date },
   files: [{ type: ObjectId, ref: "File" }],
 });
 

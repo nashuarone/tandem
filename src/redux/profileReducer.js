@@ -33,7 +33,8 @@ let initialState = {
   ],
   newPostText: "Pupiiiiiiii",
   newNameText: "",
-  isAuth: false
+  isAuth: false,
+  isAdminos: true
 };
 
 const profileReducer = (state_p = initialState, action) => {

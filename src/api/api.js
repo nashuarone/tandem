@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { setLearner } from '../redux/profileReducer'
 import { setFiles, addFile, deleteFileAC } from "../redux/fileReducer";
+import { addCourse, getAllCourses } from '../redux/coursesReducer';
 
 export const registrationAPI = async (email, password, myname, surname) => {
   try {
@@ -206,6 +207,45 @@ export function searchFileAPI(search) {
         }
       );
       dispatch(setFiles(response.data));
+    } catch (e) {
+      alert(e.response.data.message);
+    }
+  };
+}
+
+export function createCourseAPI(title, videoLink, description) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/api/courses`,
+        {
+          title,
+          videoLink,
+          description,
+        },
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      dispatch(addCourse(response.data));
+      console.log(response.data);
+    } catch (e) {
+      alert(e.response.data.message);
+    }
+  };
+}
+
+export function getAllCoursesAPI() {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/courses`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      dispatch(getAllCourses(response.data));
+      console.log(response.data);
     } catch (e) {
       alert(e.response.data.message);
     }
